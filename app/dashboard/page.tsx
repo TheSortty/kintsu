@@ -200,7 +200,7 @@ export default function DashboardPage() {
 
   const { toasts, addToast, dismiss } = useRealtimeToasts()
   const { taskProgress } = useRealtimeTasks(
-    useCallback((event) => {
+    useCallback((event: any) => {
       if (event.type === 'task_progress' && event.member_name !== user) {
         const task = tasks.find(t => t.id === event.task_id)
         if (task) addToast({ memberName: event.member_name, taskTitle: task.title, status: event.status as any })
