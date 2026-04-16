@@ -4,7 +4,7 @@ import MemberAvatar from './MemberAvatar'
 import ProgressBar from './ProgressBar'
 import { useCurrentUser } from '@/lib/hooks/useCurrentUser'
 import { MEMBERS } from '@/lib/constants'
-import type { TaskProgress } from '@/lib/types'
+import type { TaskProgress, Task } from '@/lib/types'
 import { getGlobalPercent, getMemberTotalPercent } from '@/lib/utils/progress'
 
 interface GlobalProgressHeaderProps {

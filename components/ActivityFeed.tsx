@@ -12,7 +12,7 @@ export interface ActivityEvent {
   member_name: string
   task_id: string
   task_title: string
-  content?: string
+  content?: string | null
   status?: TaskStatus
   created_at: string
 }
