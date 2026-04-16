@@ -1,26 +1,172 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* ─── RESET & BASE ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg:          #0A0A0A;
+  --color-card:        #111111;
+  --color-card-border: #1F1F1F;
+  --color-gold:        #D4AF37;
+  --color-gold-light:  #C9A84C;
+  --color-sakura:      #F9A8C9;
+  --color-sakura-dark: #EC8FAA;
+  --color-text:        #F5F5F5;
+  --color-muted:       #9CA3AF;
+  --color-done:        #10B981;
+
+  --font-display: 'Noto Serif JP', serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-gold-light); border-radius: 2px; }
+
+/* ─── SELECTION ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(212, 175, 55, 0.25);
+  color: var(--color-text);
+}
+
+/* ─── FOCUS ──────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────────────────────── */
+
+/* Gold crack draw-on animation */
+@keyframes drawCrack {
+  0%   { stroke-dashoffset: var(--crack-len, 2000); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* Sakura falling */
+@keyframes sakuraFall {
+  0%   { transform: translateY(-40px) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.55; }
+  90%  { opacity: 0.35; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* Status pulse (in_progress badge dot) */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Petal burst */
+@keyframes petalBurstAnim {
+  0%   { transform: translate(0, 0) scale(0.3) rotate(0deg);    opacity: 1; }
+  60%  { transform: translate(var(--dx, 0), -28px) scale(1) rotate(90deg); opacity: 0.8; }
+  100% { transform: translate(var(--dx, 0), -40px) scale(0.5) rotate(180deg); opacity: 0; }
+}
+
+/* Slide in right (toasts) */
+@keyframes slideInRight {
+  from { transform: translateX(120%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* Slide up (modal / sheet) */
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.3); }
+  50%       { box-shadow: 0 0 20px rgba(212, 175, 55, 0.7); }
+}
+
+/* Scale bounce (member card select) */
+@keyframes scaleBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.08); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* ─── UTILITIES ──────────────────────────────────────────────────────────────── */
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 80px; /* bottom nav clearance */
+}
+
+.card {
+  background: #181818;
+  border: 1px solid #2A2A2A;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.gold-text {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-sakura) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #7A8290;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1E1E1E;
+}
+
+/* Mobile safe bottom */
+.bottom-safe {
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 8px));
+}
+
+/* Smooth page entry */
+.page-enter {
+  animation: fadeIn 0.35s ease-out;
 }
