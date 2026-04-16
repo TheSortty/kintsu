@@ -16,7 +16,7 @@ import ProgressBar from '@/components/ProgressBar'
 import StatusBadge from '@/components/StatusBadge'
 import RealtimeToast from '@/components/RealtimeToast'
 import ActivityFeed from '@/components/ActivityFeed'
-import type { Task, Subtask, SubtaskProgress, TaskStatus } from '@/lib/types'
+import type { Task, Subtask, SubtaskProgress, TaskProgress, TaskStatus } from '@/lib/types'
 
 type TabKey = 'board' | 'equipo'
 
